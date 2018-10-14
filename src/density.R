@@ -51,7 +51,7 @@ lightningDensity <- function(ld)
   
   #################################################################
   #
-  cellsize = c(0.05,0.05)
+  cellsize = c(0.25,0.25)
   xymin = c(min(sp_point[,1]),min(sp_point[,2]))
   xymax = c(max(sp_point[,1]),max(sp_point[,2]))
   cdim = (xymax - xymin)/cellsize
@@ -82,14 +82,14 @@ lightningDensity <- function(ld)
   #
   # 下面同时画出四个带宽的核密度图，并且用同一个渲染尺度进行渲染
   #
-  kernel1 <- spkernel2d(sp_points, poly=poly, h0=0.5, grd=grdx)
-  kernel2 <- spkernel2d(sp_points, poly=poly, h0=1, grd=grdx)
-  kernel3 <- spkernel2d(sp_points, poly=poly, h0=2, grd=grdx)
-  kernel4 <- spkernel2d(sp_points, poly=poly, h0=4, grd=grdx)
-  df <-data.frame(kernel4 = kernel4,kernel3 = kernel3,
-                  kernel2 = kernel2,kernel1 = kernel1)
-  jpeg("H:/Lightning/kall.jpg",width = 1920,height = 1080)
-  SG <- SpatialGridDataFrame(grdx, data=df)
-  spplot(SG)
-  dev.off()
+#  kernel1 <- spkernel2d(sp_points, poly=poly, h0=0.5, grd=grdx)
+#  kernel2 <- spkernel2d(sp_points, poly=poly, h0=1, grd=grdx)
+#  kernel3 <- spkernel2d(sp_points, poly=poly, h0=2, grd=grdx)
+#  kernel4 <- spkernel2d(sp_points, poly=poly, h0=4, grd=grdx)
+#  df <-data.frame(kernel4 = kernel4,kernel3 = kernel3,
+#                  kernel2 = kernel2,kernel1 = kernel1)
+#  jpeg("H:/Lightning/kall.jpg",width = 1920,height = 1080)
+#  SG <- SpatialGridDataFrame(grdx, data=df)
+#  spplot(SG)
+#  dev.off()
 }
