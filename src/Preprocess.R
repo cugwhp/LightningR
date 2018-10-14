@@ -21,48 +21,77 @@ txt2Rdata <- function(filepathlist){
   }
 }
 
+
 ###########################################################
-## Load list, translate to frame
+## Load list File, translate to frame File
 ###########################################################
-list2Frame <- function(rdataPaths, isViewFrame=FALSE)
+transList2Frame <- function(rdataPaths, isViewFrame=FALSE)
 {
   for (rdatafile in rdataPaths)
   {
     print(paste(rdatafile, "is loading"))
     
     load(rdatafile)
-    df <- as.data.frame(dt)
+    
+    df <- list2Frame(dt, isViewFrame = isViewFrame)
+    
     rm(dt)
     
-    colnames(df) <- c("datetime", "lat", "lon", "current", "strike")
-  
-    df$datetime <- as.POSIXct(df$datetime, tz="Asia/Chongqing")
-    df$lat <- as.numeric(df$lat)
-    df$lon <- as.numeric(df$lon)
-    df$current <- as.numeric(df$current)
-    df$strike <- as.numeric(df$strike)
-  
     # split year/month/day/...
-    xlt <- as.POSIXlt(df$datetime)
-    df$year <- as.numeric(xlt$year)+1900 #
-    df$month <- as.numeric(xlt$mon)+1  #base 0
-    df$season <- as.integer(xlt$mon/3)
-    df$hour <- as.numeric(xlt$hour)
-    df$yday <- as.numeric(xlt$yday)+1 #base 0
-  
-    rm(xlt) #del xlt
+    df <- splitLightningDate(df)
     
     framefile = sub(pattern=".RData", replacement = "_frm.RData", rdatafile)
     print(paste(framefile, "is saving..."))
     save(df, file=framefile)
-  
-    if (isViewFrame)
-    {
-      View(df)
-    }
   }
 }
 
+########################################################
+## lightning list to Frame
+########################################################
+list2Frame <- function(ls, isViewFrame=FALSE)
+{
+  df <- as.data.frame(ls)
+  
+  colnames(df) <- c("datetime", "lat", "lon", "current", "strike")
+  
+  df$datetime <- as.POSIXct(df$datetime, tz="Asia/Chongqing")
+  df$lat <- as.numeric(df$lat)
+  df$lon <- as.numeric(df$lon)
+  df$current <- as.numeric(df$current)
+  df$strike <- as.numeric(df$strike)
+  
+  
+  # split year/month/day/...
+  splitLightningDate(df)
+  
+  if (isViewFrame)
+  {
+    View(df)
+  }
+  
+  return(df)
+}
+
+
+########################################
+## Split Lightning Date...
+########################################
+splitLightningDate <- function(df)
+{
+  # split year/month/day/...
+  xlt <- as.POSIXlt(df$datetime)
+  
+  df$year <- as.numeric(xlt$year)+1900 #
+  df$month <- as.numeric(xlt$mon)+1  #base 0
+  df$season <- as.integer(xlt$mon/3)
+  df$hour <- as.numeric(xlt$hour)
+  df$yday <- as.numeric(xlt$yday)+1 #base 0
+  
+  rm(xlt)
+
+  return(df)  
+}
 
 # 2. Load Terrain Data
 
