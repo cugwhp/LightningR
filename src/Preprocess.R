@@ -106,4 +106,27 @@ splitLightningDate <- function(df)
 
 ########################## 3- Save Data ############################
 
-#
+# 1 Prepare Data
+## 1.1 Lightning Density - ok 
+## 1.2 Terrain Class - ok
+## 1.3 Land Cover - ok
+## 1.4 AOD - ...
+## 1.5 Percipitation - ...
+## 1.6 
+##
+# 2 Statistics of Spatio-temporal Distribution 
+## 2.1 Spatio Distribution
+## 2.2 Temporal Distribution
+##
+# 3 Geodetector
+## 3.1 Geo-Joint
+## 3.2 q
+## 3.3 interaction
+# 4 Modelling
+## 4.1 Training sets
+## 4.2 Modelling...
+## 4.3 Precision...
+##
+# 5 Results
+##
+##
